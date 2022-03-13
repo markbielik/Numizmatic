@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div>
+        <p>
+            <strong>Imię: </strong>{{ user.first_name }}
+            <br />
+            <strong>Nazwisko: </strong>{{ user.last_name }}
+            <br />
+            <strong>Adres e-mail: </strong>{{ user.email }}
+            <br />
+            <strong>Nazwa użytkownika: </strong>{{ user.username }}
+        </p>
+    </div>
+    <div>
+        <a href="{% url 'change-data' %}">Zmień dane</a>
+        <a href="{% url 'change-password' %}">Zmień hasło</a>
+        <a href="#">Usuń konto</a>
+    </div>
+    <hr>
+{% endblock %}

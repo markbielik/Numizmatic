@@ -16,8 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from numiz_app import views
+from numiz_accounts import views
 
 urlpatterns = [
-   # path('coin/<int:pk>/', views.CoinDetailView.as_view(), name='coin_detail'),
+    path('login/', views.LoginView.as_view(), name='login'),
+    path('logout/', views.LogoutView.as_view(), name='logout'),
+    path('singup/', views.SignUp.as_view(), name='sing_up'),
+    path('settings/', views.UserSettings.as_view(), name='settings'),
+    path("change-password/", views.ChangeUserPassword.as_view(), name="change-password"),
+    path("change-data/", views.ChangeBasicDataUser.as_view(), name="change-data"),
 ]

@@ -23,10 +23,11 @@
         <a href="{% url 'add_subject' %}">Add Subject</a>
         <a href="#">Add Coin</a>
         <a href="#">Add Tag</a>
-        <a href="#">Logout</a>
+        <a href="{% url 'settings' %}">Settings</a>
+        <a href="{% url 'logout' %}">Logout</a>
     {% else %}
-        <a href="#">Login</a>
-        <a href="#">Sing Up</a>
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'sing_up' %}">Sing Up</a>
     {% endif %}
 </div>
 {{ user }}
