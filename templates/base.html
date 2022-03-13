@@ -21,18 +21,24 @@
         <a href="{% url 'add_designer' %}">Add Designer</a>
         <a href="{% url 'add_issuer' %}">Add Issuer</a>
         <a href="{% url 'add_subject' %}">Add Subject</a>
+        <a href="#">Add Coin</a>
         <a href="#">Add Tag</a>
         <a href="#">Logout</a>
     {% else %}
         <a href="#">Login</a>
-        <a href="#">Singin</a>
-    {% endif %}-->
-    <a href="#">About</a>
+        <a href="#">Sing Up</a>
+    {% endif %}
 </div>
 {{ user }}
 <div class="contener">
     {% block content %}
-        Witaj paskudny świecie!!!
+        {% if user.is_authenticated %}
+            Jesteś zalogowany do katalogu monet.
+        {% else %}
+            Witaj w katalogu monet.
+
+            Aby dodać nowe monety musisz być zalogowany.
+        {% endif %}
     {% endblock %}
 </div>
 {{ date }}

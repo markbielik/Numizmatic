@@ -20,7 +20,7 @@ from numiz_app import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.IndexView.as_view(), name='index'),
+    path('', views.IndexView.as_view(), name="index"),
     path('numiz_app/', include('numiz_app.urls')),
     path('numiz_accounts/', include('numiz_accounts.urls')),
 ]

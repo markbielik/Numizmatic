@@ -1,3 +1,9 @@
+import pytest
 from django.test import TestCase
+from django.urls import reverse
 
-# Create your tests here.
+
+def test_index(client):
+    url = reverse('index')
+    response = client.get(url)
+    assert response.status_code == 200
