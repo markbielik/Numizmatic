@@ -23,6 +23,6 @@ urlpatterns = [
     path('logout/', views.LogoutView.as_view(), name='logout'),
     path('singup/', views.SignUp.as_view(), name='sing_up'),
     path('settings/', views.UserSettings.as_view(), name='settings'),
-    path("change-password/", views.ChangeUserPassword.as_view(), name="change-password"),
-    path("change-data/", views.ChangeBasicDataUser.as_view(), name="change-data"),
+    path("change-password/", views.ChangeUserPassword.as_view(), name="change_password"),
+    path("change-data/", views.ChangeBasicDataUser.as_view(), name="change_data"),
 ]

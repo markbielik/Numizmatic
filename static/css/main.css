@@ -30,3 +30,41 @@ body {
 .contener {
     padding: 10px;
 }
+
+.object-list .item {
+    width:25%;
+    padding:10px 20px 10px 0;
+    float:left;
+    text-align:center;
+    line-height:1.2;
+}
+
+.object-list .item img {
+    width:100%;
+    margin-bottom:8px;
+}
+
+.object-detail {
+    text-align:justify;
+}
+
+.object-detail .price {
+    color:#333;
+    font-size:28px;
+    font-weight:bold;
+}
+
+.object-detail img {
+    width:40%;
+    float:left;
+    padding:0 20px 20px 0;
+}
+
+.object-detail h1 {
+    margin-bottom:0;
+}
+
+.object-detail h2 {
+    margin-top:10px;
+}
+

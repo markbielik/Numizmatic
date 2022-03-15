@@ -1,6 +1,6 @@
 from django import forms
 
-from numiz_app.models import Category, Issuer, Subject, Designer
+from numiz_app.models import Category, Issuer, Subject, Designer, Coin, Currency
 
 
 class CategoryForm(forms.ModelForm):
@@ -21,14 +21,20 @@ class SubjectForm(forms.ModelForm):
         fields = '__all__'
 
 
-class TagForm(forms.ModelForm):
+class CurrencyForm(forms.ModelForm):
     class Meta:
-        model = Subject
+        model = Currency
         fields = '__all__'
 
 
 class DesignerForm(forms.ModelForm):
     class Meta:
         model = Designer
+        fields = '__all__'
+
+
+class CoinForm(forms.ModelForm):
+    class Meta:
+        model = Coin
         fields = '__all__'
 

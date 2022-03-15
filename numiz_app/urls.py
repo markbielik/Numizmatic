@@ -19,12 +19,15 @@ from numiz_app import views
 
 urlpatterns = [
     path('category/', views.CategoryView.as_view(), name='category_coins'),
+    path('category/<int:pk>/', views.CategoryView.as_view(), name='category_detail'),
     path('add_category/', views.AddCategory.as_view(), name='add_category'),
     path('issuers/', views.IssuersView.as_view(), name='issuers'),
     path('add_issuer/', views.AddIssuer.as_view(), name='add_issuer'),
     path('add_designer/', views.AddDesigner.as_view(), name='add_designer'),
     path('add_subject/', views.AddSubject.as_view(), name='add_subject'),
+    path('add_currency/', views.AddCurrency.as_view(), name='add_currency'),
     path('list_coins/', views.ListCoinsView.as_view(), name='list_coins'),
     path('add_coin/', views.AddCoin.as_view(), name='add_coin'),
-    path('coin/<int:pk>/', views.CoinDetailView.as_view(), name='coin_detail'),
+    path('view_coin/', views.CoinView.as_view(), name='coin_view'),
+    path('coin/<int:pk>/', views.CoinDetail.as_view(), name='coin_detail'),
 ]
