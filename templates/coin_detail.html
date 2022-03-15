@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% block title %}
+{{ object.title }}
+{% endblock %}
+
+<div class="object-detail">
+    <img src='{% if object.obverse %}{{ object.obverse.url }}{% else %}
+    {% static 'img\no_image.png' %}{% endif %}''>
+    <img src='{{ object.reverse.url }}'>
+    <h1>{{ object.name }}</h1>
+    <h3>
+        <a href="{{ object.category.get_absolute_url }}">
+            {{ object.category }}
+        </a>
+        <a href="{{ object.issuer.get_absolute_url }}">
+            {{ object.issuer }}
+        </a>
+        <a href="{{ object.subject.get_absolute_url }}">
+            {{ object.subject }}
+        </a>
+    </h3>
+    <h4>
+        Projekt: {{ object.designer }}
+    </h4>
+
+    {{ object.description|linebreaks }}
+</div>
+
+<p>{{ object.face_value }}</p>
+<p>{{ object.stamp }}</p>
+<p>{{ object.attempt }}</p>
+<p>{{ object.issue_date }}</p>
+<p>{{ object.circulation }}</p>
+<p>{{ object.dimension }}</p>
+<p>{{ object.issue_date }}</p>
+<p>{{ object.scales }}</p>
+<p>{{ object.remarks }}</p>
+{% endblock %}
