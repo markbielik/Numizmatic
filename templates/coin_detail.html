@@ -1,40 +1,41 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
 
-{% block title %}
-{{ object.title }}
-{% endblock %}
-
-<div class="object-detail">
+<div class="object-detail item">
     <img src='{% if object.obverse %}{{ object.obverse.url }}{% else %}
-    {% static 'img\no_image.png' %}{% endif %}''>
-    <img src='{{ object.reverse.url }}'>
+    {% static 'img\no_image.png' %}{% endif %}'>
+    <img src='{% if object.reverse %}{{ object.reverse.url }}{% else %}
+    {% static 'img\no_image.png' %}{% endif %}'>
     <h1>{{ object.name }}</h1>
-    <h3>
-        <a href="{{ object.category.get_absolute_url }}">
+    <h3><a href="{{ object.category.get_absolute_url }}">
             {{ object.category }}
         </a>
-        <a href="{{ object.issuer.get_absolute_url }}">
+    </h3>
+    <h4><a href="{{ object.issuer.get_absolute_url }}">
             {{ object.issuer }}
         </a>
-        <a href="{{ object.subject.get_absolute_url }}">
+    </h4>
+    <h2><a href="{{ object.subject.get_absolute_url }}">
             {{ object.subject }}
         </a>
-    </h3>
+    </h2>
     <h4>
         Projekt: {{ object.designer }}
     </h4>
 
-    {{ object.description|linebreaks }}
+    <p>Opis: {{ object.description|linebreaks }}</p>
+    <p>Nominał :{{ object.face_value }}</p>
+    <p>Typ stemþla: {{ object.stamp }}</p>
+    <p>Stop: {{ object.attempt }}</p>
+    <p>Data emisji: {{ object.issue_date }}</p>
+    <p>Nakład: {{ object.circulation }} szt. </p>
+    <p>Rozmiar: {{ object.dimension }}mm</p>
+    <p>Waga: {{ object.scales }}g</p>
+    <p>Uwagi: {{ object.remarks }}</p>
 </div>
-
-<p>{{ object.face_value }}</p>
-<p>{{ object.stamp }}</p>
-<p>{{ object.attempt }}</p>
-<p>{{ object.issue_date }}</p>
-<p>{{ object.circulation }}</p>
-<p>{{ object.dimension }}</p>
-<p>{{ object.issue_date }}</p>
-<p>{{ object.scales }}</p>
-<p>{{ object.remarks }}</p>
+    <div>
+        <a href="{{ object.get_update_url }}">Edytuj</a>
+        <a href="{{ object.get_delete_url }}">Usuń</a>
+    </div>
 {% endblock %}

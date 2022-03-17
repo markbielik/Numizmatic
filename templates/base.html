@@ -12,37 +12,64 @@
 </head>
 <body>
 
-<div class="topnav">
-    <a class="active" href="{% url 'index' %}">Home</a>
-    <a href="{% url 'category_coins' %}">Category coins</a>
-    <a href="{% url 'list_coins' %}">Coins</a>
+<div>
+    <ol class="top-nav">
+        <li><a href="{% url 'index' %}">Home</a></li>
+        <li><a href="{% url 'category_coins' %}">Category coins</a>
+            <ul>
+                {% for obj in categories %}
+                    <li><a href="{{ obj.get_absolute_url }}"> {{obj}}</a></li>
+                {% endfor %}
+            </ul>
+        </li>
+        <li><a href="{% url 'issuers' %}">Issuers</a></li>
+        <li><a href="{% url 'coins' %}">Coins</a></li>
     {% if user.is_authenticated %}
-        <a href="{% url 'add_category' %}">Add Category</a>
-        <a href="{% url 'add_designer' %}">Add Designer</a>
-        <a href="{% url 'add_issuer' %}">Add Issuer</a>
-        <a href="{% url 'add_subject' %}">Add Subject</a>
-        <a href="{% url 'add_coin' %}">Add Coin</a>
-        <a href="{% url 'coin_view' %}">Add CoinView</a>
-        <a href="{% url 'add_currency' %}">Add Currency</a>
-        <a href="{% url 'settings' %}">Settings</a>
-        <a href="{% url 'logout' %}">Logout</a>
-    {% else %}
-        <a href="{% url 'login' %}">Login</a>
-        <a href="{% url 'sing_up' %}">Sing Up</a>
+        <li><a href="#">{{ user }}</a>
+            <ul>
+                <li><a href="{% url 'settings' %}">Settings</a></li>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+        </li>
+     {% else %}
+        <li><a href="{% url 'login' %}">Login</a></li>
+        <li><a href="{% url 'sing_up' %}">Sing Up</a></li>
     {% endif %}
+    </ol>
 </div>
-{{ user }}
-<div class="contener">
-    {% block content %}
-        {% if user.is_authenticated %}
-            Jesteś zalogowany do katalogu monet.
-        {% else %}
-            Witaj w katalogu monet.
 
-            Aby dodać nowe monety musisz być zalogowany.
-        {% endif %}
+<div class="container">
+    {% block title %}
     {% endblock %}
+    <section class="menu">
+        {% if user.is_authenticated %}
+            <ul class="right-menu">
+                <li><a href="{% url 'add_category' %}">Add Category</a></li>
+                <li><a href="{% url 'add_designer' %}">Add Designer</a></li>
+                <li><a href="{% url 'add_issuer' %}">Add Issuer</a></li>
+                <li><a href="{% url 'add_subject' %}">Add Subject</a></li>
+                <li><a href="{% url 'add_coin' %}">Add Coin</a></li>
+                <li><a href="{% url 'add_coin2' %}">Add Coin2</a></li>
+                <li><a href="{% url 'add_currency' %}">Add Currency</a></li>
+            </ul>
+        {% endif %}
+    </section>
+    <section>
+        {% block content %}
+            {% if user.is_authenticated %}
+                Jesteś zalogowany do katalogu monet.
+            {% else %}
+                Witaj w katalogu monet.
+
+                Aby dodać nowe monety musisz być zalogowany.
+            {% endif %}
+        {% endblock %}
+    </section>
 </div>
-{{ date }}
+
+<footer>
+    {{ date }}
+</footer>
+
 </body>
 </html>

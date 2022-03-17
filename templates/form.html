@@ -5,4 +5,11 @@
         {{ form.as_p }}
         <input type="submit">
     </form>
+    {% if messages %}
+        <p class="messages">
+            {% for message in messages %}
+                    {{ message|safe }}
+            {% endfor %}
+        </p>
+    {% endif %}
 {% endblock %}

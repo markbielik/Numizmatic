@@ -1,6 +1,12 @@
 from django import forms
+from django.core.exceptions import ValidationError
 
 from numiz_app.models import Category, Issuer, Subject, Designer, Coin, Currency
+
+
+def check_negative_values(value):
+    if value < 0.1:
+        raise ValidationError("Incorrect, negative values")
 
 
 class CategoryForm(forms.ModelForm):
@@ -18,10 +24,12 @@ class IssuerForm(forms.ModelForm):
 class SubjectForm(forms.ModelForm):
     class Meta:
         model = Subject
-        fields = '__all__'
+        fields = ['name', 'description']
 
 
 class CurrencyForm(forms.ModelForm):
+    value = forms.IntegerField(validators=[check_negative_values])
+
     class Meta:
         model = Currency
         fields = '__all__'
@@ -30,11 +38,20 @@ class CurrencyForm(forms.ModelForm):
 class DesignerForm(forms.ModelForm):
     class Meta:
         model = Designer
-        fields = '__all__'
+        fields = ['first_name', 'last_name']
 
 
 class CoinForm(forms.ModelForm):
+    circulation = forms.IntegerField(validators=[check_negative_values])
+    dimension = forms.DecimalField(validators=[check_negative_values])
+    scales = forms.DecimalField(validators=[check_negative_values])
+
     class Meta:
         model = Coin
-        fields = '__all__'
+        exclude = ['slug', 'created', 'updated']
+        widgets = {
+            'designer': forms.CheckboxSelectMultiple,
+            'description': forms.Textarea(attrs={'size': 1000})
+        }
+
 

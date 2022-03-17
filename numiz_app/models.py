@@ -21,7 +21,10 @@ class Designer(models.Model):
 
 class Category(models.Model):
     name = models.CharField(verbose_name="Category name",
-                            max_length=100)
+                            max_length=100,
+                            unique=True)
+    description = models.TextField(verbose_name="About of category",
+                                   blank=True)
 
     class Meta:
         verbose_name = 'category'
@@ -33,6 +36,12 @@ class Category(models.Model):
 
     def get_absolute_url(self):
         return reverse('category_detail', args=(self.pk, ))
+
+    def get_update_url(self):
+        return reverse('category_update', args=(self.pk, ))
+
+    def get_delete_url(self):
+        return reverse('category_del', args=(self.pk, ))
 
 
 class Coin(models.Model):
@@ -49,7 +58,7 @@ class Coin(models.Model):
                                null=False)
     subject = models.ForeignKey('Subject',
                                 on_delete=models.CASCADE,
-                                default='individual subject')
+                                default='Temat indywidualny')
     face_value = models.ForeignKey('Currency',
                                    on_delete=models.CASCADE,
                                    default=None,
@@ -67,10 +76,10 @@ class Coin(models.Model):
                                 blank=True)
     issue_date = models.DateField()
     circulation = models.IntegerField(help_text="mintage in the number of pieces")
-    dimension = models.DecimalField(max_digits=4,
+    dimension = models.DecimalField(max_digits=6,
                                     decimal_places=2,
                                     help_text="dimension coin in milimeters")
-    scales = models.DecimalField(max_digits=4,
+    scales = models.DecimalField(max_digits=6,
                                  decimal_places=2,
                                  help_text="scales coin in grams")
     remarks = models.CharField(verbose_name="remarks for coin",
@@ -89,6 +98,12 @@ class Coin(models.Model):
     def get_absolute_url(self):
         return reverse('coin_detail', args=(self.pk,))
 
+    def get_update_url(self):
+        return reverse('coin_update', args=(self.pk, ))
+
+    def get_delete_url(self):
+        return reverse('coin_del', args=(self.pk, ))
+
 
 class Issuer(models.Model):
     name = models.CharField(verbose_name="Name of issuer",
@@ -103,6 +118,12 @@ class Issuer(models.Model):
 
     def get_absolute_url(self):
         return reverse('issuer_detail', args=(self.pk, ))
+
+    def get_update_url(self):
+        return reverse('issuer_update', args=(self.pk, ))
+
+    def get_delete_url(self):
+        return reverse('issuer_del', args=(self.pk, ))
 
 
 class Subject(models.Model):
@@ -130,3 +151,11 @@ class Currency(models.Model):
                                 unique=True)
     unit = models.CharField(choices=TYPE_UNIT,
                             max_length=5)
+
+    def __str__(self):
+        return f"{self.value} {self.unit}"
+
+    class Meta:
+        verbose_name = 'currency'
+        verbose_name_plural = 'currencies'
+        ordering = ('value', )

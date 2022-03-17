@@ -1,4 +1,5 @@
 import pytest
+from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
 
@@ -16,33 +17,40 @@ def test_login(client, user):
     assert response.status_code == 302
     assert response.wsgi_request.user.is_authenticated
 
-
+@pytest.mark.django_db
 def test_logout(client):
     url = reverse('logout')
     response = client.get(url)
     assert response.status_code == 302
 
-
+@pytest.mark.django_db
 def test_sing_up(client):
     url = reverse('sing_up')
     response = client.get(url)
     assert response.status_code == 200
+    dct = {
+        'username': 'jacek',
+        'password1': 'AlaMaKota543',
+        'password2': 'AlaMaKota543'
+    }
+    response = client.post(url, dct)
+    assert response.status_code == 302
+    User.objects.get(username='jacek')
 
-
-def test_settings(client, user, user_settings):
+@pytest.mark.django_db
+def test_settings(user, client):
     url = reverse('settings')
-    response = client.get(url)
-    assert response.status_code == 200
+    client.force_login(user)
     dct = {
         'username': 'marek',
         'first_name': 'marek',
         'last_name': "bielik",
         'email': 'marek@example.pl',
     }
-    response = client.post(url, dct)
-    assert response.status_code == 302
+    response = client.get(url, dct)
+    assert response.status_code == 200
 
-
+@pytest.mark.django_db
 def test_change_password(client):
     url = reverse('change_password')
     response = client.get(url)
@@ -53,9 +61,9 @@ def test_change_password(client):
         'new_password2': "812.dupA",
     }
     response = client.post(url, dct)
-    assert response.status_code == 200
+    assert response.status_code == 302
 
-
+@pytest.mark.django_db
 def test_change_data(client, user_settings):
     url = reverse('change_data')
     response = client.get(url)
