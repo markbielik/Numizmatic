@@ -1,6 +1,5 @@
 import pytest
 from django.contrib.auth.models import User
-from django.test import TestCase
 from django.urls import reverse
 
 
@@ -17,11 +16,13 @@ def test_login(client, user):
     assert response.status_code == 302
     assert response.wsgi_request.user.is_authenticated
 
+
 @pytest.mark.django_db
 def test_logout(client):
     url = reverse('logout')
     response = client.get(url)
     assert response.status_code == 302
+
 
 @pytest.mark.django_db
 def test_sing_up(client):
@@ -37,6 +38,7 @@ def test_sing_up(client):
     assert response.status_code == 302
     User.objects.get(username='jacek')
 
+
 @pytest.mark.django_db
 def test_settings(user, client):
     url = reverse('settings')
@@ -50,9 +52,11 @@ def test_settings(user, client):
     response = client.get(url, dct)
     assert response.status_code == 200
 
+
 @pytest.mark.django_db
-def test_change_password(client):
+def test_change_password(user, client):
     url = reverse('change_password')
+    client.force_login(user)
     response = client.get(url)
     assert response.status_code == 200
     dct = {
@@ -61,11 +65,13 @@ def test_change_password(client):
         'new_password2': "812.dupA",
     }
     response = client.post(url, dct)
-    assert response.status_code == 302
+    assert response.status_code == 200
+
 
 @pytest.mark.django_db
-def test_change_data(client, user_settings):
+def test_change_data(user, client, user_settings):
     url = reverse('change_data')
+    client.force_login(user)
     response = client.get(url)
     assert response.status_code == 200
     dct = {
@@ -76,4 +82,3 @@ def test_change_data(client, user_settings):
     }
     response = client.post(url, dct)
     assert response.status_code == 302
-

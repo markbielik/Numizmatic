@@ -11,11 +11,6 @@ def user():
     return x
 
 @pytest.fixture
-def user2():
-    x = User(username='marek', password='Dupa.812')
-    return x
-
-@pytest.fixture
 def user_settings():
     x = User(username='marek',
              first_name='marek',
