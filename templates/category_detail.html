@@ -9,10 +9,10 @@
         <p>{{ object.description }}</p>
 
     </div>
+    {% if user.is_authenticated %}
     <div>
         <a href="{{ object.get_update_url }}">Edytuj</a>
         <a href="{{ object.get_delete_url }}">Usuń</a>
     </div>
-
-
+    {% endif %}
 {% endblock %}

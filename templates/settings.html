@@ -11,9 +11,11 @@
             <strong>Nazwa użytkownika: </strong>{{ user.username }}
         </p>
     </div>
+    {% if user.is_authenticated %}
     <div>
         <a href="{% url 'change_data' %}">Zmień dane</a>
         <a href="{% url 'change_password' %}">Zmień hasło</a>
     </div>
+    {% endif %}
     <hr>
 {% endblock %}

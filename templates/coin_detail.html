@@ -2,26 +2,26 @@
 {% load static %}
 {% block content %}
 
-<div class="object-detail item">
-    <img src='{% if object.obverse %}{{ object.obverse.url }}{% else %}
-    {% static 'img\no_image.png' %}{% endif %}'>
-    <img src='{% if object.reverse %}{{ object.reverse.url }}{% else %}
-    {% static 'img\no_image.png' %}{% endif %}'>
-    <h1>{{ object.name }}</h1>
-    <h3><a href="{{ object.category.get_absolute_url }}">
+<section class="object-detail item">
+    <h5><a href="{% url 'category_coins' %}">Category</a> >><a href="{{ object.category.get_absolute_url }}">
             {{ object.category }}
         </a>
-    </h3>
-    <h4><a href="{{ object.issuer.get_absolute_url }}">
-            {{ object.issuer }}
-        </a>
-    </h4>
-    <h2><a href="{{ object.subject.get_absolute_url }}">
+    </h5>
+    <h1>{{ object.title }}</h1>
+    <h2>Seria: <a href="{{ object.subject.get_absolute_url }}">
             {{ object.subject }}
         </a>
     </h2>
+    <img src='{% if object.obverse %}{{ object.obverse.url }}{% else %}
+    {% static 'img\no_image.png' %}{% endif %}' alt="awers monety {{ object.title }}">
+    <img src='{% if object.reverse %}{{ object.reverse.url }}{% else %}
+    {% static 'img\no_image.png' %}{% endif %}' alt="rewers monety {{ object.title }}">
+    <h4>Emitent: <a href="{{ object.issuer.get_absolute_url }}">
+            {{ object.issuer }}
+        </a>
+    </h4>
     <h4>
-        Projekt: {{ object.designer }}
+        Projekt: {% for obj in object.designer.all %} | {{ obj }} |{% endfor %}
     </h4>
 
     <p>Opis: {{ object.description|linebreaks }}</p>
@@ -33,9 +33,11 @@
     <p>Rozmiar: {{ object.dimension }}mm</p>
     <p>Waga: {{ object.scales }}g</p>
     <p>Uwagi: {{ object.remarks }}</p>
-</div>
+</section>
+    {% if user.is_authenticated %}
     <div>
         <a href="{{ object.get_update_url }}">Edytuj</a>
         <a href="{{ object.get_delete_url }}">Usuń</a>
     </div>
+    {% endif %}
 {% endblock %}

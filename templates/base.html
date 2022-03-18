@@ -43,13 +43,12 @@
     {% endblock %}
     <section class="menu">
         {% if user.is_authenticated %}
-            <ul class="right-menu">
+            <ul class="right-menu">Additional options:
                 <li><a href="{% url 'add_category' %}">Add Category</a></li>
                 <li><a href="{% url 'add_designer' %}">Add Designer</a></li>
                 <li><a href="{% url 'add_issuer' %}">Add Issuer</a></li>
                 <li><a href="{% url 'add_subject' %}">Add Subject</a></li>
                 <li><a href="{% url 'add_coin' %}">Add Coin</a></li>
-                <li><a href="{% url 'add_coin2' %}">Add Coin2</a></li>
                 <li><a href="{% url 'add_currency' %}">Add Currency</a></li>
             </ul>
         {% endif %}
