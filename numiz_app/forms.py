@@ -51,7 +51,5 @@ class CoinForm(forms.ModelForm):
         exclude = ['slug', 'created', 'updated']
         widgets = {
             'designer': forms.CheckboxSelectMultiple,
-            'description': forms.Textarea(attrs={'size': 1000})
+            'description': forms.Textarea(attrs={'size': 1000}),
         }
-
-

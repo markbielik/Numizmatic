@@ -58,7 +58,7 @@ class Coin(models.Model):
                                null=False)
     subject = models.ForeignKey('Subject',
                                 on_delete=models.CASCADE,
-                                default='Temat indywidualny')
+                                help_text='If there is no topic, choose an individual topic')
     face_value = models.ForeignKey('Currency',
                                    on_delete=models.CASCADE,
                                    default=None,
@@ -128,7 +128,9 @@ class Issuer(models.Model):
 
 class Subject(models.Model):
     name = models.CharField(verbose_name="Subject name",
-                            max_length=250)
+                            max_length=250,
+                            default="Temat indywidualny",
+                            unique=True)
     description = models.TextField(verbose_name="Description of subject",
                                    blank=True)
 

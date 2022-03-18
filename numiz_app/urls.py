@@ -33,7 +33,6 @@ urlpatterns = [
     path('add_currency/', views.AddCurrency.as_view(), name='add_currency'),
     path('list_coins/', views.CoinsView.as_view(), name='coins'),
     path('add_coin/', views.AddCoin.as_view(), name='add_coin'),
-    path('add_coin2/', views.AddCoin2.as_view(), name='add_coin2'),
     path('coin/<int:pk>/', views.CoinDetail.as_view(), name='coin_detail'),
     path('coin_update/<int:pk>/', views.CoinUpdate.as_view(), name='coin_update'),
     path('coin_del/<int:pk>/', views.CoinDelete.as_view(), name='coin_del'),

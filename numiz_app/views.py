@@ -39,14 +39,14 @@ class CategoryDetail(DetailView):
     template_name = 'category_detail.html'
 
 
-class CategoryUpdate(UpdateView):
+class CategoryUpdate(LoginRequiredMixin, UpdateView):
     model = Category
     form_class = CategoryForm
     template_name = 'form.html'
     success_url = reverse_lazy('category_coins')
 
 
-class CategoryDelete(DeleteView):
+class CategoryDelete(LoginRequiredMixin, DeleteView):
     model = Category
     template_name = 'form.html'
     success_url = reverse_lazy('category_coins')
@@ -79,14 +79,14 @@ class IssuerDetail(DetailView):
     template_name = 'issuer_detail.html'
 
 
-class IssuerUpdate(UpdateView):
+class IssuerUpdate(LoginRequiredMixin, UpdateView):
     model = Issuer
     form_class = IssuerForm
     template_name = 'form.html'
     success_url = reverse_lazy('issuer_detail')
 
 
-class IssuerDelete(DeleteView):
+class IssuerDelete(LoginRequiredMixin, DeleteView):
     model = Issuer
     template_name = 'form.html'
     success_url = reverse_lazy('issuers')
@@ -152,30 +152,15 @@ class AddCurrency(LoginRequiredMixin, View):
 class CoinsView(ListView):
     model = Coin
     context_object_name = 'coins'
-    paginate_by = 5
+    paginate_by = 10
     template_name = 'coins.html'
 
 
-class AddCoin(CreateView):
+class AddCoin(LoginRequiredMixin, CreateView):
     model = Coin
     form_class = CoinForm
     template_name = 'form.html'
     success_url = reverse_lazy('coins')
-
-
-class AddCoin2(View):
-    def get(self, request):
-        form = CoinForm()
-        coins = Coin.objects.all()
-        return render(request, 'form.html', {'form': form,
-                                             'coins': coins})
-
-    def post(self, request):
-        form = CoinForm(request.POST)
-        if form.is_valid():
-            Coin.objects.create(**form.cleaned_data)
-            return redirect('coins')
-        return render(request, 'form.html', {'form': form})
 
 
 class CoinDetail(DetailView):
@@ -183,14 +168,14 @@ class CoinDetail(DetailView):
     template_name = 'coin_detail.html'
 
 
-class CoinUpdate(UpdateView):
+class CoinUpdate(LoginRequiredMixin, UpdateView):
     model = Coin
     form_class = CoinForm
     template_name = 'form.html'
     success_url = reverse_lazy('coin_detail')
 
 
-class CoinDelete(DeleteView):
+class CoinDelete(LoginRequiredMixin, DeleteView):
     model = Coin
     template_name = 'form.html'
     success_url = reverse_lazy('coins')
