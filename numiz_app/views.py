@@ -12,7 +12,9 @@ from numiz_app.models import Category, Issuer, Designer, Subject, Coin, Currency
 class IndexView(View):
     def get(self, request):
         categories = Category.objects.all()
-        return render(request, 'base.html', {'categories': categories})
+        coins = Coin.objects.all()
+        return render(request, 'base.html', {'categories': categories,
+                                             'coins': coins})
 
 
 class CategoryView(View):
@@ -48,7 +50,7 @@ class CategoryUpdate(LoginRequiredMixin, UpdateView):
 
 class CategoryDelete(LoginRequiredMixin, DeleteView):
     model = Category
-    template_name = 'form.html'
+    template_name = 'delete_form.html'
     success_url = reverse_lazy('category_coins')
 
 
@@ -88,7 +90,7 @@ class IssuerUpdate(LoginRequiredMixin, UpdateView):
 
 class IssuerDelete(LoginRequiredMixin, DeleteView):
     model = Issuer
-    template_name = 'form.html'
+    template_name = 'delete_form.html'
     success_url = reverse_lazy('issuers')
 
 
@@ -97,8 +99,8 @@ class AddDesigner(LoginRequiredMixin, View):
     def get(self, request):
         form = DesignerForm()
         designers = Designer.objects.all()
-        return render(request, 'form.html', {'form': form,
-                                             'designers': designers})
+        return render(request, 'form_with_list.html', {'form': form,
+                                                       'objects': designers})
 
     def post(self, request):
         form = DesignerForm(request.POST)
@@ -116,8 +118,8 @@ class AddSubject(LoginRequiredMixin, View):
     def get(self, request):
         form = SubjectForm()
         subjects = Subject.objects.all()
-        return render(request, 'form.html', {'form': form,
-                                             'subjects': subjects})
+        return render(request, 'form_with_list.html', {'form': form,
+                                                       'objects': subjects})
 
     def post(self, request):
         form = SubjectForm(request.POST)
@@ -135,8 +137,8 @@ class AddCurrency(LoginRequiredMixin, View):
     def get(self, request):
         form = CurrencyForm()
         currency = Currency.objects.all()
-        return render(request, 'form.html', {'form': form,
-                                             'subjects': currency})
+        return render(request, 'form_with_list.html', {'form': form,
+                                                       'objects': currency})
 
     def post(self, request):
         form = CurrencyForm(request.POST)
@@ -177,5 +179,5 @@ class CoinUpdate(LoginRequiredMixin, UpdateView):
 
 class CoinDelete(LoginRequiredMixin, DeleteView):
     model = Coin
-    template_name = 'form.html'
+    template_name = 'delete_form.html'
     success_url = reverse_lazy('coins')

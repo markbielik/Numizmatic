@@ -1,3 +1,4 @@
+
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
@@ -74,7 +75,7 @@ class Coin(models.Model):
     reverse = models.ImageField(verbose_name="Coin reverse",
                                 upload_to='reverse/%Y/%m',
                                 blank=True)
-    issue_date = models.DateField()
+    issue_date = models.DateField(help_text="Format date is RRRR-MM-DD")
     circulation = models.IntegerField(help_text="mintage in the number of pieces")
     dimension = models.DecimalField(max_digits=6,
                                     decimal_places=2,
@@ -108,7 +109,8 @@ class Coin(models.Model):
 class Issuer(models.Model):
     name = models.CharField(verbose_name="Name of issuer",
                             max_length=250,
-                            null=False)
+                            null=False,
+                            unique=True)
     description = models.TextField()
     short_name = models.CharField(verbose_name="Short name of issuer",
                                   max_length=5)
@@ -129,7 +131,6 @@ class Issuer(models.Model):
 class Subject(models.Model):
     name = models.CharField(verbose_name="Subject name",
                             max_length=250,
-                            default="Temat indywidualny",
                             unique=True)
     description = models.TextField(verbose_name="Description of subject",
                                    blank=True)
@@ -149,8 +150,7 @@ TYPE_UNIT = (
 
 
 class Currency(models.Model):
-    value = models.IntegerField(verbose_name="Coin face value",
-                                unique=True)
+    value = models.IntegerField(verbose_name="Coin face value")
     unit = models.CharField(choices=TYPE_UNIT,
                             max_length=5)
 
