@@ -13,13 +13,7 @@
         </p>
     {% endif %}
 
-    {% if objects not in subjects %}
-        <h5>Subjects:</h5>
-    {% elif objects is designers %}
-        <h5>Designers:</h5>
-    {% else %}
-        <h5>Currencies:</h5>
-    {% endif %}
+    <h4>Entered values:</h4>
     <ul class="object-list-content bonus">
     {% for obj in objects %}
         <li>{{obj}}</li>

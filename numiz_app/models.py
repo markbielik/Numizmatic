@@ -19,6 +19,9 @@ class Designer(models.Model):
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
+    class Meta:
+        ordering = ('first_name', )
+
 
 class Category(models.Model):
     name = models.CharField(verbose_name="Category name",
@@ -127,6 +130,9 @@ class Issuer(models.Model):
     def get_delete_url(self):
         return reverse('issuer_del', args=(self.pk, ))
 
+    class Meta:
+        ordering = ('name', )
+
 
 class Subject(models.Model):
     name = models.CharField(verbose_name="Subject name",
@@ -137,6 +143,9 @@ class Subject(models.Model):
 
     def __str__(self):
         return f"{self.name}"
+
+    class Meta:
+        ordering = ('name', )
 
 
 TYPE_UNIT = (
