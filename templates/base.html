@@ -13,62 +13,66 @@
 <body>
 
 <div>
-    <ol class="top-nav">
+    <ul class="top-nav">
         <li><a href="{% url 'index' %}">Home</a></li>
-        <li><a href="{% url 'category_coins' %}">Category coins</a>
-            <ul>
-                {% for obj in categories %}
-                    <li><a href="{{ obj.get_absolute_url }}"> {{obj}}</a></li>
-                {% endfor %}
-            </ul>
-        </li>
+        <li><a href="{% url 'category_coins' %}">Category coins</a></li>
         <li><a href="{% url 'issuers' %}">Issuers</a></li>
         <li><a href="{% url 'coins' %}">Coins</a></li>
     {% if user.is_authenticated %}
-        <li><a href="#">{{ user }}</a>
-            <ul>
-                <li><a href="{% url 'settings' %}">Settings</a></li>
-                <li><a href="{% url 'logout' %}">Logout</a></li>
-            </ul>
-        </li>
-     {% else %}
+    {% else %}
         <li><a href="{% url 'login' %}">Login</a></li>
         <li><a href="{% url 'sing_up' %}">Sing Up</a></li>
     {% endif %}
-    </ol>
+    </ul>
 </div>
 
 <div class="container">
-    {% block title %}
-    {% endblock %}
     <section class="menu">
         {% if user.is_authenticated %}
-            <ul class="right-menu">Additional options:
-                <li><a href="{% url 'add_category' %}">Add Category</a></li>
-                <li><a href="{% url 'add_designer' %}">Add Designer</a></li>
-                <li><a href="{% url 'add_issuer' %}">Add Issuer</a></li>
-                <li><a href="{% url 'add_subject' %}">Add Subject</a></li>
-                <li><a href="{% url 'add_coin' %}">Add Coin</a></li>
-                <li><a href="{% url 'add_currency' %}">Add Currency</a></li>
-            </ul>
+            <h4>Welcome {{ user }}</h4>
+            <div class="right-menu">
+                <a href="{% url 'settings' %}">Settings</a>
+                <a href="{% url 'logout' %}">Logout</a>
+            </div>
+            <br/>
+            <h4>Additional options:</h4>
+            <div class="right-menu">
+                <a href="{% url 'add_category' %}">Add Category</a>
+                <a href="{% url 'add_designer' %}">Add Designer</a>
+                <a href="{% url 'add_issuer' %}">Add Issuer</a>
+                <a href="{% url 'add_subject' %}">Add Subject</a>
+                <a href="{% url 'add_coin' %}">Add Coin</a>
+                <a href="{% url 'add_currency' %}">Add Currency</a>
+            </div>
         {% endif %}
     </section>
-    <section>
+    <section class="content">
         {% block content %}
-            {% if user.is_authenticated %}
-                Jesteś zalogowany do katalogu monet.
-            {% else %}
-                Witaj w katalogu monet.
+            <article>
+                {% if user.is_authenticated %}
+                    <p>Jesteś zalogowany do katalogu monet.</p>
+                {% else %}
+                    <p>Witaj w katalogu monet.</p>
 
-                Aby dodać nowe monety musisz być zalogowany.
-            {% endif %}
+                    <p>Aby dodać nowe monety musisz być zalogowany.</p>
+                {% endif %}
+            </article>
+            <article class="list-object-index">
+                {% for coin in coins %}
+                    {% if coin.id < 4 %}
+                    <div class="item">
+                        <a href="{{ coin.get_absolute_url }}">
+                            <img src='{% if coin.reverse %}{{ coin.reverse.url }}{% else %}
+                                        {% static 'img\no_image.png' %}{% endif %}'
+                                        alt="rewers monety {{ object.title }}"></a>
+                            <a href="{{ coin.get_absolute_url }}"><p>{{ coin.title }}</p></a>
+                            <br>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </article>
         {% endblock %}
     </section>
 </div>
-
-<footer>
-    {{ date }}
-</footer>
-
 </body>
 </html>
